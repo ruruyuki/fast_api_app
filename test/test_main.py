@@ -1,23 +1,19 @@
 from fastapi.testclient import TestClient
-
-from ..src.main import app
+from starlette.requests import Request
+from api.main import app
+import pathlib
 
 client = TestClient(app)
 
 
 # ユーザー情報取得API 正常系テスト
-def test_get_user_NR001():
-    response = client.get(
-        "/users/abcde12345", headers={"token": "correct_token"})
+def test_site_index():
+    response = client.get("/")
     # レスポンス検証
     # ステータスコード
     assert response.status_code == 200
     # レスポンスボディ
-    assert response.json() == {
-        "id": "abcde12345",
-        "name": "Yamada",
-        "email_address": "yamada@example.com",
-    }
+
 
 # ユーザー情報取得API 異常系テスト
 # トークン違い
